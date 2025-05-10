@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "diesel-aegis-457313-k4",
+  "private_key_id": "ddf29d000669714f547513fe4b91df2bdaea3da5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCf35+ES2K2IWDo\nguCBg/2ih20CXBu7ceMETMIgI6fRCTeeL2dl1ygtrvLk/BC3UeNqiYh0czpa684G\nZQMuqLSX5QUL4fPUEIhUrvovqrz+egBpNtvtoCaC3uIqg8yZ/whbkUBIC6KESv+5\nGnnKELHvtCcYnE+TOX3azVAZxRLC0pF5CPCL1bJREYpi5jMEwlv4bUtytqIh7iDx\nXqvQkvkEK/kOfkyJSXwrIdCtUkzYdyo5ErtloLsSVFPNslX9AqMTaSN/1j+vjE/7\nWSgjSww/jOlwU2v6OAV/+lEPnHQKS4AbOyV0p18pAzuvRU/Jjm9KoS9ORIr35ssA\nILufHf63AgMBAAECggEADfnYHDy/hol4yyAJ1/iobGlnW6yeq1kY40WB4O+3r3FI\nAJbx9I1bEKdPH4/I4aW8ejycsQVpEA1g0jP0E8OhdKKLjuQz/bwWQZpBpSIevyZT\nhonKWcXFfW0A8NOFyDPrJfTBiFV6txLxXlv/Upf5XimYaLEyzv2DJY9g6xJ3LJBl\nXrzw9JBUKmjVN+JSz8j0pdvQqte+tCAovpnOx/XoyUJjyQFxtzMEInuPTeCzjCvU\nZdJilIfMyAVL87G9WomI8N8JJrqhiI3QMhEVCGNsmO2dboLtJ8QBLo3dS7l6fIMQ\navyetJHvQ3PMj67rzSGT1ZOmrezG2gzHQjkeaZ2UWQKBgQDbl7m8pOdpvxfdgPOQ\n5hQIa55ANXJ6zA3ajJ1dE7sKn3v5h0dL8YGvXKx1o/cVlL5K9y4nOxzWGBjNAjbb\n+tsw6+DqlBbntWyO29JlLW0z9IyzfdzLf6wzP7mQP7QvdGtTiYRjh+Vd71EL3CFA\nYSqwBh6G0oa1q/23ePnvqPipSQKBgQC6YTW3jBsmholOHwsYpVK6WHiSjJk23mm+\nFuQ7rPFHNZr8xwFhJ7+MZSNJ6wX4ZJXDOBZLL8NxZ2BTIi6vhQPdI4ESa+rS8hKs\nW6pmVwpfbiowmCYyQgd0sDLCThi137DXpUqEiTJJjQc6A2/tHkHohMQfhGWwltbP\nKXKvkcln/wKBgQC5y2QxgmzyAecVWPe7z49/mF6rAQ29bE0EbxjuGbWVxV7Fv3nJ\nfas2Tnj0iCiUr+dZ0k3Qj6lUU8sYGhmEgnlWqR0CHQ5MOiqBrOgVBxxwaydo7sMT\nwxBVxEMjE2NHC3+LjLzg4ahllAjEuhnAOPY/PM4zUIj9yWnABLGj3xmVUQKBgCT1\nifVv7yJgo3G+bjDg99rEGITXJLrguA9d8rxyuxXn52gg/oEJpM5ub+UEmhZ7u8cO\npD0cp6EhYtSZfrCHrBB6Leo9RD+4iUNsmgnZUNFDw1IHmet1dI0LM8WcPwIx7ZuV\nx4Uov7QeJ0S10cgvq9o0GcA2PQQbpVVHXtq6Cjp5AoGAJLa/OQZAWqg0YLX9Ucvu\n/kT0PO5Syci6YMVQJgD9Nst8qX/WIdA+d5jqQFfMI6lsaf6TqS5G+q0wjM11H0lR\nDuDzdeSXp05yRS5QHYY/P5eIh1RX6KavhtR+x7Q9w361O+xLrsoFfHGGv47CMf3U\nTfliqDabYFMHsU3+3wyjw4Y=\n-----END PRIVATE KEY-----\n",
+  "client_email": "tkdteori@diesel-aegis-457313-k4.iam.gserviceaccount.com",
+  "client_id": "111611519769807818099",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tkdteori%40diesel-aegis-457313-k4.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
