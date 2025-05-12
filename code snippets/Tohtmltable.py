@@ -35,6 +35,7 @@ gc = gspread.service_account(filename="GsheetAccess.json")
 
 #gspread.authorize(creds)
 
+print(gc)
 
 sheet = gc.open("Begrebs liste TKD").sheet1
 
