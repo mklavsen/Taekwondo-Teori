@@ -19,6 +19,7 @@
             padding: 20px;
             background-color: #f9f9f9;
             border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         /* Title */
@@ -26,16 +27,7 @@
             font-size: 24px;
             margin-bottom: 20px;
             color: #333;
-        }
-
-        /* Search Box */
-        .search-box {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
+            text-align: center;
         }
 
         /* Table Styling */
@@ -69,32 +61,6 @@
             background-color: #f1f1f1;
         }
 
-        /* Pagination Styling */
-        .pagination {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .pagination button {
-            padding: 8px 16px;
-            margin: 5px;
-            border: none;
-            background-color: #3498db;
-            color: #fff;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .pagination button:hover {
-            background-color: #2980b9;
-        }
-
-        .pagination button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
         /* Responsive Table */
         @media screen and (max-width: 768px) {
             .styled-table th, .styled-table td {
@@ -112,18 +78,7 @@
 <div id="table-container">
     <h2 id="table-title">Data from Google Sheet</h2>
 
-    <!-- Search Box -->
-    <input type="text" id="search-box" placeholder="Search..." onkeyup="filterTable()" class="search-box">
-
     <!-- Table -->
     <table id="data-table" class="styled-table">
         <thead></thead>
         <tbody></tbody>
-    </table>
-
-    <!-- Pagination -->
-    <div id="pagination" class="pagination"></div>
-</div>
-
-</body>
-</html>
