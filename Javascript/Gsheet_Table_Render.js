@@ -32,10 +32,12 @@ const GoogleSheetRenderer = (function () {
                     processData(settings);
                 } else {
                     console.error('No data found in the specified sheet.');
+                    alert('No data found in the sheet.');
                 }
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
+                alert('There was an error fetching the data from the Google Sheet.');
             });
     }
 
@@ -49,9 +51,14 @@ const GoogleSheetRenderer = (function () {
             }
         }
 
-        // Find the indices of the selected columns
+        // Ensure that selectedColumns are available in the headers
         const selectedIndices = settings.selectedColumns.map(col => headers.indexOf(col)).filter(index => index !== -1);
-        renderTable(settings.tableId, sheetData, selectedIndices);
+        if (selectedIndices.length > 0) {
+            renderTable(settings.tableId, sheetData, selectedIndices);
+        } else {
+            console.error('Selected columns not found in the sheet headers.');
+            alert('The selected columns were not found in the sheet.');
+        }
     }
 
     // Render the Table
