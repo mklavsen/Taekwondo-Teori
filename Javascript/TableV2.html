@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheet Data Table</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Container Styling */
+        #table-container {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        /* Title */
+        #table-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Search Box */
+        .search-box {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        /* Table Styling */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .styled-table th, .styled-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .styled-table th {
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .styled-table td {
+            background-color: #fff;
+        }
+
+        /* Hover Effects */
+        .styled-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Pagination Styling */
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 8px 16px;
+            margin: 5px;
+            border: none;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .pagination button:hover {
+            background-color: #2980b9;
+        }
+
+        .pagination button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Responsive Table */
+        @media screen and (max-width: 768px) {
+            .styled-table th, .styled-table td {
+                padding: 10px;
+            }
+
+            .styled-table {
+                border: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="table-container">
+    <h2 id="table-title">Data from Google Sheet</h2>
+
+    <!-- Search Box -->
+    <input type="text" id="search-box" placeholder="Search..." onkeyup="filterTable()" class="search-box">
+
+    <!-- Table -->
+    <table id="data-table" class="styled-table">
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div id="pagination" class="pagination"></div>
+</div>
+
+</body>
+</html>
