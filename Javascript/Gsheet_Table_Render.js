@@ -1,27 +1,35 @@
 // GoogleSheetRenderer Module
 const GoogleSheetRenderer = (function () {
-
-    // Configuration Variables
-    let config = {};
+    // Hardcoded Configuration Variables
+    const config = {
+        sheetId: '1dqfr76YA3uXOGH2BK1bflf9pcV4MkH5r6NOcv27oFB8',  // Hardcoded Google Sheet ID
+        apiKey: 'AIzaSyBVYNlFiUuBBnhsa6OZQUXAFz2iBUUxu88'  // Hardcoded API Key
+    };
     let sheetData = [];
     let headers = [];
 
     // Initialize the Renderer
     function init(settings) {
-        config = settings;
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.sheetId}/values/${config.sheetName}?key=${config.apiKey}`;
-        fetchData(url);
+        // Set custom header if provided
+        if (settings.customHeader) {
+            document.getElementById('table-title').textContent = settings.customHeader;
+        }
+
+        // Use passed-in sheetName
+        const sheetName = settings.sheetName || 'Sheet1'; // Default to 'Sheet1' if not specified
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.sheetId}/values/${sheetName}?key=${config.apiKey}`;
+        fetchData(url, settings);
     }
 
     // Fetch Data from Google Sheets
-    function fetchData(url) {
+    function fetchData(url, settings) {
         fetch(url)
             .then(response => response.json())
             .then(data => {
                 if (data.values && data.values.length > 0) {
-                    headers = data.values[0];
-                    sheetData = data.values.slice(1);
-                    processData();
+                    headers = data.values[0]; // First row is the header
+                    sheetData = data.values.slice(1); // Rest is the data
+                    processData(settings);
                 } else {
                     console.error('No data found in the specified sheet.');
                 }
@@ -32,22 +40,24 @@ const GoogleSheetRenderer = (function () {
     }
 
     // Apply Pre-Filter and Render
-    function processData() {
-        if (config.preFilter.column && config.preFilter.value) {
-            const filterIndex = headers.indexOf(config.preFilter.column);
+    function processData(settings) {
+        // Apply the preFilter if provided
+        if (settings.preFilter && settings.preFilter.column && settings.preFilter.value) {
+            const filterIndex = headers.indexOf(settings.preFilter.column);
             if (filterIndex !== -1) {
-                sheetData = sheetData.filter(row => row[filterIndex]?.toLowerCase() === config.preFilter.value.toLowerCase());
+                sheetData = sheetData.filter(row => row[filterIndex]?.toLowerCase() === settings.preFilter.value.toLowerCase());
             }
         }
 
-        const selectedIndices = config.selectedColumns.map(col => headers.indexOf(col)).filter(index => index !== -1);
-        renderTable(sheetData, selectedIndices);
+        // Find the indices of the selected columns
+        const selectedIndices = settings.selectedColumns.map(col => headers.indexOf(col)).filter(index => index !== -1);
+        renderTable(settings.tableId, sheetData, selectedIndices);
     }
 
     // Render the Table
-    function renderTable(data, indices) {
-        const thead = document.querySelector('#data-table thead');
-        const tbody = document.querySelector('#data-table tbody');
+    function renderTable(tableId, data, indices) {
+        const thead = document.querySelector(tableId + ' thead');
+        const tbody = document.querySelector(tableId + ' tbody');
 
         // Clear any existing table content
         thead.innerHTML = '';
@@ -55,9 +65,9 @@ const GoogleSheetRenderer = (function () {
 
         // Create header row
         const headerRow = document.createElement('tr');
-        config.selectedColumns.forEach(header => {
+        indices.forEach(index => {
             const th = document.createElement('th');
-            th.textContent = header;
+            th.textContent = headers[index];
             headerRow.appendChild(th);
         });
         thead.appendChild(headerRow);

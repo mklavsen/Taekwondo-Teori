@@ -1,4 +1,4 @@
-""<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,6 +37,8 @@
         column: 'Poomse', // <-- Replace with the column name
         value: 'Il-jang'  // <-- Replace with the value you want to filter for
     };
+ // Configuration for Selected Columns
+    const SELECTED_COLUMNS = ['Poomse', 'Tælling', 'Koreansk stand', 'Koreansk teknik', 'Dansk beskrivelse']; // <-- Replace with the column names you want to display
 
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
 
@@ -50,16 +52,6 @@
                 headers = data.values[0];
                 sheetData = data.values.slice(1);
 
-                // Populate headers
-                const thead = document.querySelector('#data-table thead');
-                const headerRow = document.createElement('tr');
-                headers.forEach(header => {
-                    const th = document.createElement('th');
-                    th.textContent = header;
-                    headerRow.appendChild(th);
-                });
-                thead.appendChild(headerRow);
-
                 // Apply Pre-Filter if configured
                 if (PRE_FILTER.column && PRE_FILTER.value) {
                     const filterIndex = headers.indexOf(PRE_FILTER.column);
@@ -68,8 +60,21 @@
                     }
                 }
 
-                // Render initial table with filtered data
-                renderTable(sheetData);
+                // Find indices of selected columns
+                const selectedIndices = SELECTED_COLUMNS.map(col => headers.indexOf(col)).filter(index => index !== -1);
+
+                // Populate headers for only selected columns
+                const thead = document.querySelector('#data-table thead');
+                const headerRow = document.createElement('tr');
+                SELECTED_COLUMNS.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header;
+                    headerRow.appendChild(th);
+                });
+                thead.appendChild(headerRow);
+
+                // Render table with only selected columns
+                renderTable(sheetData, selectedIndices);
             } else {
                 document.body.innerHTML = '<p>No data found in the specified sheet.</p>';
             }
@@ -79,15 +84,15 @@
             document.body.innerHTML = '<p>Error fetching data from Google Sheet.</p>';
         });
 
-    function renderTable(data) {
+    function renderTable(data, indices) {
         const tbody = document.querySelector('#data-table tbody');
         tbody.innerHTML = ''; // Clear existing rows
 
         data.forEach(row => {
             const tr = document.createElement('tr');
-            row.forEach(cell => {
+            indices.forEach(index => {
                 const td = document.createElement('td');
-                td.textContent = cell;
+                td.textContent = row[index];
                 tr.appendChild(td);
             });
             tbody.appendChild(tr);
@@ -97,4 +102,3 @@
 
 </body>
 </html>
-""
