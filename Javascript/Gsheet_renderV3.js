@@ -18,20 +18,20 @@ const GoogleSheetRenderer = (function () {
                     let sheetData = data.values.slice(1);
 
                    // Apply Pre-Filters if configured
-if (settings.preFilter && Array.isArray(settings.preFilter)) {
-    // Collect all valid filter indices
-    const filterConditions = settings.preFilter.map(({ column, value }) => {
-        const filterIndex = headers.indexOf(column);
-        return filterIndex !== -1 ? { index: filterIndex, value: value.toLowerCase() } : null;
-    }).filter(Boolean);
+                    if (settings.preFilter && Array.isArray(settings.preFilter)) {
+                        // Collect all valid filter indices
+                        const filterConditions = settings.preFilter.map(({ column, value }) => {
+                        const filterIndex = headers.indexOf(column);
+                        return filterIndex !== -1 ? { index: filterIndex, value: value.toLowerCase() } : null;
+                     }).filter(Boolean);
 
-    // Apply all filter conditions simultaneously
-    sheetData = sheetData.filter(row => {
-        return filterConditions.every(condition => {
-            return row[condition.index]?.toLowerCase() === condition.value;
-        });
-    });
-}
+                   // Apply all filter conditions simultaneously
+                        sheetData = sheetData.filter(row => {
+                        return filterConditions.every(condition => {
+                        return row[condition.index]?.toLowerCase() === condition.value;
+                        });
+                      });
+                    }
 
 
                     // Find indices of selected columns
