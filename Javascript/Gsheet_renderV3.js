@@ -1,3 +1,4 @@
+// GSheet_renderV3.js
 const GoogleSheetRenderer = (function () {
     // Hardcoded Configuration Variables
     const config = {
@@ -16,38 +17,31 @@ const GoogleSheetRenderer = (function () {
                     const headers = data.values[0];
                     let sheetData = data.values.slice(1);
 
-                    // Apply Pre-Filter if configured
-                 if (settings.preFilter && Array.isArray(settings.preFilter)) {
-                    settings.preFilter.forEach(filter => {
-                          const filterIndex = headers.indexOf(filter.column);
-                         if (filterIndex !== -1) {
-                               sheetData = sheetData.filter(row => 
-                                   row[filterIndex]?.toLowerCase().trim() === filter.value.toLowerCase().trim()
-                               );
-                         }
-                       });
-             }       
+                    // Apply multiple pre-filters if configured
+                    if (settings.preFilter && Array.isArray(settings.preFilter)) {
+                        settings.preFilter.forEach(filter => {
+                            const filterIndex = headers.indexOf(filter.column);
+                            if (filterIndex !== -1) {
+                                sheetData = sheetData.filter(row => row[filterIndex]?.toLowerCase() === filter.value.toLowerCase());
+                            }
+                        });
+                    }
 
-                    // If no selected columns are provided, use all columns
-                    const selectedColumns = settings.selectedColumns.length > 0 ? settings.selectedColumns : headers;
-                    const selectedIndices = selectedColumns.map(col => headers.indexOf(col)).filter(index => index !== -1);
+                    // Find indices of selected columns
+                    const selectedIndices = settings.selectedColumns.map(col => headers.indexOf(col)).filter(index => index !== -1);
 
-                    // Populate Headers
-                    const table = document.querySelector(settings.tableId);
-                    const thead = table.querySelector('thead');
-                    const tbody = table.querySelector('tbody');
-                    
-                    // Clear previous data
-                    thead.innerHTML = '';
-                    tbody.innerHTML = '';
+                    // Populate headers for only selected columns
+                    const thead = document.querySelector(settings.tableId + ' thead');
+                    const headerRow = document.createElement('tr');
+                    settings.selectedColumns.forEach(header => {
+                        const th = document.createElement('th');
+                        th.textContent = header;
+                        headerRow.appendChild(th);
+                    });
+                    thead.appendChild(headerRow);
 
-                    // Render Headers
-                    thead.innerHTML = '<tr>' + selectedColumns.map(col => `<th>${col}</th>`).join('') + '</tr>';
-
-                    // Render Rows
-                    tbody.innerHTML = sheetData.map(row => 
-                        '<tr>' + selectedIndices.map(index => `<td>${row[index] ?? ''}</td>`).join('') + '</tr>'
-                    ).join('');
+                    // Render table with only selected columns
+                    renderTable(sheetData, selectedIndices, settings.tableId);
                 } else {
                     console.error('No data found in the specified sheet.');
                     alert('No data found in the sheet.');
@@ -57,6 +51,22 @@ const GoogleSheetRenderer = (function () {
                 console.error('Error fetching data:', error);
                 alert('There was an error fetching the data from the Google Sheet.');
             });
+    }
+
+    // Render the Table
+    function renderTable(data, indices, tableId) {
+        const tbody = document.querySelector(tableId + ' tbody');
+        tbody.innerHTML = ''; // Clear existing rows
+
+        data.forEach(row => {
+            const tr = document.createElement('tr');
+            indices.forEach(index => {
+                const td = document.createElement('td');
+                td.textContent = row[index];
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        });
     }
 
     // Public API
