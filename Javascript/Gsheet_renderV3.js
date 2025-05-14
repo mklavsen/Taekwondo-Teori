@@ -18,13 +18,11 @@ const GoogleSheetRenderer = (function () {
                     let sheetData = data.values.slice(1);
 
                     // Apply Pre-Filters if configured
-                    if (Array.isArray(settings.preFilter) && settings.preFilter.length > 0) {
-                        settings.preFilter.forEach(filter => {
-                            const filterIndex = headers.indexOf(filter.column);
+                    if (settings.preFilter && Array.isArray(settings.preFilter)) {
+                        settings.preFilter.forEach(({ column, value }) => {
+                            const filterIndex = headers.indexOf(column);
                             if (filterIndex !== -1) {
-                                sheetData = sheetData.filter(row => {
-                                    return row[filterIndex]?.toLowerCase() === filter.value.toLowerCase();
-                                });
+                                sheetData = sheetData.filter(row => row[filterIndex]?.toLowerCase() === value.toLowerCase());
                             }
                         });
                     }
@@ -40,7 +38,6 @@ const GoogleSheetRenderer = (function () {
                         th.textContent = header;
                         headerRow.appendChild(th);
                     });
-                    thead.innerHTML = ''; // Clear old headers
                     thead.appendChild(headerRow);
 
                     // Render table with only selected columns
