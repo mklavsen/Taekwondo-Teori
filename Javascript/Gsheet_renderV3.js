@@ -17,15 +17,22 @@ const GoogleSheetRenderer = (function () {
                     const headers = data.values[0];
                     let sheetData = data.values.slice(1);
 
-                    // Apply Pre-Filters if configured
-                    if (settings.preFilter && Array.isArray(settings.preFilter)) {
-                        settings.preFilter.forEach(({ column, value }) => {
-                            const filterIndex = headers.indexOf(column);
-                            if (filterIndex !== -1) {
-                                sheetData = sheetData.filter(row => row[filterIndex]?.toLowerCase() === value.toLowerCase());
-                            }
-                        });
-                    }
+                   // Apply Pre-Filters if configured
+if (settings.preFilter && Array.isArray(settings.preFilter)) {
+    // Collect all valid filter indices
+    const filterConditions = settings.preFilter.map(({ column, value }) => {
+        const filterIndex = headers.indexOf(column);
+        return filterIndex !== -1 ? { index: filterIndex, value: value.toLowerCase() } : null;
+    }).filter(Boolean);
+
+    // Apply all filter conditions simultaneously
+    sheetData = sheetData.filter(row => {
+        return filterConditions.every(condition => {
+            return row[condition.index]?.toLowerCase() === condition.value;
+        });
+    });
+}
+
 
                     // Find indices of selected columns
                     const selectedIndices = settings.selectedColumns.map(col => headers.indexOf(col)).filter(index => index !== -1);
