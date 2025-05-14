@@ -1,4 +1,3 @@
-""// GSheet_renderV2.js
 const GoogleSheetRenderer = (function () {
     // Hardcoded Configuration Variables
     const config = {
@@ -21,25 +20,30 @@ const GoogleSheetRenderer = (function () {
                     if (settings.preFilter && settings.preFilter.column && settings.preFilter.value) {
                         const filterIndex = headers.indexOf(settings.preFilter.column);
                         if (filterIndex !== -1) {
-                            sheetData = sheetData.filter(row => row[filterIndex]?.toLowerCase() === settings.preFilter.value.toLowerCase());
+                            sheetData = sheetData.filter(row => row[filterIndex]?.toLowerCase().trim() === settings.preFilter.value.toLowerCase().trim());
                         }
                     }
 
-                    // Find indices of selected columns
-                    const selectedIndices = settings.selectedColumns.map(col => headers.indexOf(col)).filter(index => index !== -1);
+                    // If no selected columns are provided, use all columns
+                    const selectedColumns = settings.selectedColumns.length > 0 ? settings.selectedColumns : headers;
+                    const selectedIndices = selectedColumns.map(col => headers.indexOf(col)).filter(index => index !== -1);
 
-                    // Populate headers for only selected columns
-                    const thead = document.querySelector(settings.tableId + ' thead');
-                    const headerRow = document.createElement('tr');
-                    settings.selectedColumns.forEach(header => {
-                        const th = document.createElement('th');
-                        th.textContent = header;
-                        headerRow.appendChild(th);
-                    });
-                    thead.appendChild(headerRow);
+                    // Populate Headers
+                    const table = document.querySelector(settings.tableId);
+                    const thead = table.querySelector('thead');
+                    const tbody = table.querySelector('tbody');
+                    
+                    // Clear previous data
+                    thead.innerHTML = '';
+                    tbody.innerHTML = '';
 
-                    // Render table with only selected columns
-                    renderTable(sheetData, selectedIndices, settings.tableId);
+                    // Render Headers
+                    thead.innerHTML = '<tr>' + selectedColumns.map(col => `<th>${col}</th>`).join('') + '</tr>';
+
+                    // Render Rows
+                    tbody.innerHTML = sheetData.map(row => 
+                        '<tr>' + selectedIndices.map(index => `<td>${row[index] ?? ''}</td>`).join('') + '</tr>'
+                    ).join('');
                 } else {
                     console.error('No data found in the specified sheet.');
                     alert('No data found in the sheet.');
@@ -51,25 +55,8 @@ const GoogleSheetRenderer = (function () {
             });
     }
 
-    // Render the Table
-    function renderTable(data, indices, tableId) {
-        const tbody = document.querySelector(tableId + ' tbody');
-        tbody.innerHTML = ''; // Clear existing rows
-
-        data.forEach(row => {
-            const tr = document.createElement('tr');
-            indices.forEach(index => {
-                const td = document.createElement('td');
-                td.textContent = row[index];
-                tr.appendChild(td);
-            });
-            tbody.appendChild(tr);
-        });
-    }
-
     // Public API
     return {
         fetchAndRenderGoogleSheet
     };
 })();
-""
