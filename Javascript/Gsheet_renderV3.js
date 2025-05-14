@@ -17,12 +17,16 @@ const GoogleSheetRenderer = (function () {
                     let sheetData = data.values.slice(1);
 
                     // Apply Pre-Filter if configured
-                    if (settings.preFilter && settings.preFilter.column && settings.preFilter.value) {
-                        const filterIndex = headers.indexOf(settings.preFilter.column);
-                        if (filterIndex !== -1) {
-                            sheetData = sheetData.filter(row => row[filterIndex]?.toLowerCase().trim() === settings.preFilter.value.toLowerCase().trim());
-                        }
-                    }
+                 if (settings.preFilter && Array.isArray(settings.preFilter)) {
+                    settings.preFilter.forEach(filter => {
+                          const filterIndex = headers.indexOf(filter.column);
+                         if (filterIndex !== -1) {
+                               sheetData = sheetData.filter(row => 
+                                   row[filterIndex]?.toLowerCase().trim() === filter.value.toLowerCase().trim()
+                               );
+                         }
+                       });
+             }       
 
                     // If no selected columns are provided, use all columns
                     const selectedColumns = settings.selectedColumns.length > 0 ? settings.selectedColumns : headers;
