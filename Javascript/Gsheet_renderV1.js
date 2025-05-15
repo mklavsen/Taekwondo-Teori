@@ -1,4 +1,4 @@
-// GSheet_renderV3.js
+// GSheet_renderV1.js
 const GoogleSheetRenderer = (function () {
     // Hardcoded Configuration Variables
     const config = {
