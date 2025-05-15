@@ -1,4 +1,4 @@
-""// GSheet_renderV3.js
+// GSheet_renderV3.js
 const GoogleSheetRenderer = (function () {
     // Hardcoded Configuration Variables
     const config = {
@@ -40,9 +40,7 @@ const GoogleSheetRenderer = (function () {
                     }
 
                     // Find indices of selected columns
-                    const selectedIndices = settings.selectedColumns
-                        .map(col => headers.indexOf(col))
-                        .filter(index => index !== -1);
+                    const selectedIndices = settings.selectedColumns.map(col => headers.indexOf(col)).filter(index => index !== -1);
 
                     if (selectedIndices.length === 0) {
                         console.error('No valid columns found for rendering.');
@@ -95,4 +93,4 @@ const GoogleSheetRenderer = (function () {
         fetchAndRenderGoogleSheet
     };
 })();
-""
+
