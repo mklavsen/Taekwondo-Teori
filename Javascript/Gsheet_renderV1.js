@@ -8,10 +8,14 @@ const GoogleSheetRenderer = (function () {
 
     // Fetch Data and Render Table
     function fetchAndRenderGoogleSheet(settings) {
+        console.log(settings);
         const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.sheetId}/values/${settings.sheetName}?key=${config.apiKey}`;
         
         fetch(url)
-            .then(response => response.json())
+            .then((response) =>{
+                                console.log(response);
+                 response.json()
+                })
             .then(data => {
                 if (data.values && data.values.length > 0) {
                     const headers = data.values[0];

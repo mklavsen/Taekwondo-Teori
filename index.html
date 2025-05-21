@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Website</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>About Us</h2>
+            <p>This is a brief introduction about the website and its purpose.</p>
+        </section>
+
+        <section>
+            <h2>Poomse Techniques - Il-jang</h2>
+            <div id="table-container"></div>
+
+            <script>
+                fetch('https://cdn.jsdelivr.net/gh/mklavsen/taekwondo-teori@main/Javascript/TableV2.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('table-container').innerHTML = html;
+
+                        // Set the custom title after loading the template
+                        const tableTitle = "Poomse Techniques - Il-jang"; // Customize this value
+                        document.getElementById('table-title').textContent = tableTitle;
+                    })
+                    .catch(error => { 
+                        console.error('Error loading HTML template:', error);
+                    });
+            </script>
+
+            <script src="Javascript\Gsheet_renderV1.js"></script>
+            <script>
+                console.log(GoogleSheetRenderer)
+                GoogleSheetRenderer.fetchAndRenderGoogleSheet(
+                   {sheetName: 'Poomse'}
+                );
+            </script>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 My Website. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
