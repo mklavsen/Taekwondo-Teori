@@ -1,0 +1,33 @@
+<div id="table-container"></div>
+
+        <script src="Javascript/Gsheet_renderV6.js"></script> 
+            <script>
+            (async () => {
+                const [headers, sheetData] = await GoogleSheetRenderer.Fetchdata({
+                sheetName: "Poomse"
+            });
+
+            const filters = {
+            Poomse: "Il-jang",
+            Tælling: "10"
+            };
+
+            console.log("Filters type:", typeof filters);
+            console.log("Filters value:", filters);
+
+            console.log("Type of headers:", typeof headers);
+            console.log("Is headers an array?", Array.isArray(headers));
+            console.log("Headers content:", headers);
+
+            const filteredData = GoogleSheetRenderer.applyFilter(headers, sheetData, filters);
+
+            const Header = ["Tælling", "Koreansk stand", "Koreansk teknik", "Dansk beskrivelse"];
+            const title = "Taegeuk - Il-jang";
+            GoogleSheetRenderer.renderTable(Header, filteredData, headers,"table-container", title);
+
+
+
+            console.log("Final Filtered Data:", filteredData);
+            })();
+        </script>
+

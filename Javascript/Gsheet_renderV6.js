@@ -32,34 +32,37 @@ const GoogleSheetRenderer = (function () {
         }
         return [[], []]; // Return empty arrays if no data
     }
-        
-    /**
-    * Applies multiple filters to the sheet data.
-    * @param {Array} headers - The headers of the sheet.
-    * @param {Array} sheetData - The rows of data.
-    * @param {Array} filters - An array of filter objects: { column, value }.
-    * @returns {Array} - Filtered data rows.
-    */
-    function applyFilter(headers, sheetData, filters) {
-        // Map each filter to its index
-        const filterCriteria = filters.map(filter => {
-            const index = headers.indexOf(filter.column);
-            if (index === -1) {
-                console.warn(`Column "${filter.column}" not found.`);
+  /**
+ * Applies multiple filters to the sheet data, supporting exact match and numeric range filters.
+ * @param {Array} headers - The column headers.
+ * @param {Array} sheetData - The data rows.
+ * @param {Object} filters - Filter object: { columnName: value | {min, max} }.
+ * @returns {Array} - Filtered data rows.
+ */
+function applyFilter(headers, sheetData, filters) {
+    return sheetData.filter(row => {
+        return Object.entries(filters).every(([column, condition]) => {
+            const colIndex = headers.indexOf(column);
+            if (colIndex === -1) return false;
+
+            const cellValue = row[colIndex];
+
+            // Check for range object
+            if (typeof condition === 'object' && (condition.min !== undefined || condition.max !== undefined)) {
+                const numericValue = parseFloat(cellValue);
+                if (isNaN(numericValue)) return false;
+
+                const minCheck = condition.min !== undefined ? numericValue >= condition.min : true;
+                const maxCheck = condition.max !== undefined ? numericValue <= condition.max : true;
+                return minCheck && maxCheck;
             }
-            return { index, value: filter.value.toLowerCase().trim(), column: filter.column };
-        }).filter(f => f.index !== -1); // Remove invalid columns
 
-        // Apply all filter conditions
-        const filteredData = sheetData.filter(row =>
-            filterCriteria.every(({ index, value }) =>
-                row[index]?.toLowerCase().trim() === value
-            )
-        );
+            // Default to string equality comparison
+            return String(cellValue).toLowerCase().trim() === String(condition).toLowerCase().trim();
+        });
+    });
+}
 
-        console.log("Filtered Data:", filteredData);
-        return filteredData;
-    }
 
  /**
  * Renders a table using only the columns specified in the headers array.
