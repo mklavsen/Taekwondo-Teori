@@ -1,6 +1,6 @@
 <div id="table-container"></div>
 
-        <script src="Javascript/Gsheet_renderV6.js"></script> 
+        <script src="https://cdn.jsdelivr.net/gh/mklavsen/Taekwondo-teori@main/Javascript/Gsheet_renderV6.js"></script> 
             <script>
             (async () => {
                 const [headers, sheetData] = await GoogleSheetRenderer.Fetchdata({
@@ -8,14 +8,14 @@
             });
 
             const filters = {
-            Område: "Benteknik",
-            Bæltegrad: {min: 7}
+            Område: "Teori",
+            Bæltegrad: 8
             };
 
             const filteredData = GoogleSheetRenderer.applyFilter(headers, sheetData, filters);
 
-            const Header = ["Teknik Koreansk", "Teknik Dansk", "Bæltegrad"];
-            const title = "Benteknik - 8. Kup";
+            const Header = ["Teknik Koreansk", "Teknik Dansk"];
+            const title = "Teori- 8. Kup";
             GoogleSheetRenderer.renderTable(Header, filteredData, headers,"table-container", title);
 
 

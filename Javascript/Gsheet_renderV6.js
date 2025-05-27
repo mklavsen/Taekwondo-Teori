@@ -138,22 +138,46 @@ function renderTable(headers, filteredData, fullColumnHeaders, containerId, titl
  * @param {HTMLTableElement} table - The table element to style.
  */
 function styleTable(table) {
-    table.style.width = '100%';
+    table.style.width = '80%';
     table.style.borderCollapse = 'collapse';
     table.style.fontFamily = 'Arial, sans-serif';
+    table.style.margin = '20px';
     table.style.marginTop = '1rem';
+    table.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+    table.style.backgroundColor = '#ffffff';
 
     // Style header
-    const thead = table.querySelector('thead');
+    /** const thead = table.querySelector('thead');
     if (thead) {
         thead.style.backgroundColor = '#333';
         thead.style.color = '#fff';
-    }
+        thead.style.textAlign = 'center';
+    } */
 
-    table.querySelectorAll('th, td').forEach(cell => {
+    table.querySelectorAll('th').forEach(cell => {
+        cell.style.padding = '8px';
+        cell.style.border = '1px solid #ddd';
+        cell.style.textAlign = 'center';
+        cell.style.backgroundColor = '#4CAF50';
+        cell.style.color = '#fff';
+    });
+/**
+    table.querySelectorAll('td').forEach(cell => {
         cell.style.padding = '8px';
         cell.style.border = '1px solid #ddd';
         cell.style.textAlign = 'left';
+        cell.style.backgroundColor = '#f9f9f9';
+    });
+*/
+    const rows = table.querySelectorAll('tr');
+    rows.forEach((row, index) => {
+        const bgColor = index % 2 === 0 ? '#ffffff' : '#f9f9f9';
+        row.querySelectorAll('td').forEach(cell => {
+            cell.style.padding = '8px';
+            cell.style.border = '1px solid #ddd';
+            cell.style.textAlign = 'left';
+            cell.style.backgroundColor = bgColor;
+        });
     });
 
  const titleElement = table.previousElementSibling;
