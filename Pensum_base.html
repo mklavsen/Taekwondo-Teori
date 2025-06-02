@@ -4,25 +4,18 @@
             <script>
             (async () => {
                 const [headers, sheetData] = await GoogleSheetRenderer.Fetchdata({
-                sheetName: "Poomse"
+                sheetName: "Grundteknik"
             });
 
             const filters = {
-            Poomse: "Il-jang",
-            Tælling: "Yeol (10)"
+            Område: "Teori",
+            Bæltegrad: 8
             };
-
-            console.log("Filters type:", typeof filters);
-            console.log("Filters value:", filters);
-
-            console.log("Type of headers:", typeof headers);
-            console.log("Is headers an array?", Array.isArray(headers));
-            console.log("Headers content:", headers);
 
             const filteredData = GoogleSheetRenderer.applyFilter(headers, sheetData, filters);
 
-            const Header = ["Tælling", "Koreansk stand", "Koreansk teknik", "Dansk beskrivelse"];
-            const title = "Taegeuk - Il-jang";
+            const Header = ["Teknik Koreansk", "Teknik Dansk"];
+            const title = "Teori- 8. Kup";
             GoogleSheetRenderer.renderTable(Header, filteredData, headers,"table-container", title);
 
 

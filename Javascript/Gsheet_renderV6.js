@@ -138,7 +138,7 @@ function renderTable(headers, filteredData, fullColumnHeaders, containerId, titl
  * @param {HTMLTableElement} table - The table element to style.
  */
 function styleTable(table) {
-    table.style.width = '80%';
+    table.style.width = '100%';
     table.style.borderCollapse = 'collapse';
     table.style.fontFamily = 'Arial, sans-serif';
     table.style.margin = '20px';
